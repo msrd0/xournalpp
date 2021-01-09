@@ -52,7 +52,7 @@ void GraphBackgroundPainter::paintBackgroundGraph()
 	double marginTopBottom = margin1;
 	double marginLeftRight = margin1;
 	double startX = drawRaster1;
-	double startY = drawRaster1;
+	double startY = drawRaster1 * 0.75; // nobody writes in the first graph anyways so make it slightly smaller
 	double snappingOffset = 2.5;
 
 	if (roundMargin)
@@ -89,5 +89,19 @@ void GraphBackgroundPainter::paintBackgroundGraph()
 		cairo_line_to(cr, width - marginLeftRight, y);
 	}
 
+	cairo_stroke(cr);
+	
+	// prepare double border
+	Util::cairo_set_source_rgbi(cr, this->foregroundColor1);
+	cairo_set_line_width(cr, lineWidth * lineWidthFactor * 3);
+
+	// draw left border
+	cairo_move_to(cr, 5*drawRaster1, 0);
+	cairo_line_to(cr, 5*drawRaster1, height);
+	cairo_stroke(cr);
+	
+	// draw right border
+	cairo_move_to(cr, 37*drawRaster1, 0);
+	cairo_line_to(cr, 37*drawRaster1, height);
 	cairo_stroke(cr);
 }
