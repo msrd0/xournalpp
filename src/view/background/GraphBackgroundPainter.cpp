@@ -46,7 +46,11 @@ void GraphBackgroundPainter::paintBackgroundGraph()
 {
 	XOJ_CHECK_TYPE(GraphBackgroundPainter);
 
-	Util::cairo_set_source_rgbi(cr, this->foregroundColor1);
+	int bgColor = page->getBackgroundColor();
+	auto color = (bgColor & 0xFF > 0x50) && ((bgColor >> 8) & 0xFF > 0x50) && ((bgColor >> 16) & 0xFF > 0x50)
+			? this->foregroundColor1
+			: 0xFFFFFF - this->foregroundColor1;
+	Util::cairo_set_source_rgbi(cr, color);
 
 	cairo_set_line_width(cr, lineWidth * lineWidthFactor);
 	double marginTopBottom = margin1;
@@ -92,7 +96,7 @@ void GraphBackgroundPainter::paintBackgroundGraph()
 	cairo_stroke(cr);
 	
 	// prepare double border
-	Util::cairo_set_source_rgbi(cr, this->foregroundColor1);
+	Util::cairo_set_source_rgbi(cr, color);
 	cairo_set_line_width(cr, lineWidth * lineWidthFactor * 3);
 
 	// draw left border
