@@ -2,6 +2,7 @@
 
 #include <Util.h>
 #include <cmath>
+#include <iostream>
 
 GraphBackgroundPainter::GraphBackgroundPainter()
 {
@@ -46,10 +47,12 @@ void GraphBackgroundPainter::paintBackgroundGraph()
 {
 	XOJ_CHECK_TYPE(GraphBackgroundPainter);
 
-	int bgColor = page->getBackgroundColor();
-	auto color = (bgColor & 0xFF > 0x50) && ((bgColor >> 8) & 0xFF > 0x50) && ((bgColor >> 16) & 0xFF > 0x50)
+	const int bgColor = page->getBackgroundColor();
+	std::cout << "bgColor = rgb(" << ((bgColor >> 16) & 0xFF) << ", " << ((bgColor >> 8) & 0xFF) << ", " << (bgColor & 0xFF) << ")" << std::endl;
+	const int color = ((bgColor & 0xFF) > 0x50) && (((bgColor >> 8) & 0xFF) > 0x50) && (((bgColor >> 16) & 0xFF) > 0x50)
 			? this->foregroundColor1
-			: 0xFFFFFF - this->foregroundColor1;
+			: (0xFFFFFF - this->foregroundColor1);
+	std::cout << "  color = rgb(" << ((color >> 16) & 0xFF) << ", " << ((color >> 8) & 0xFF) << ", " << (color & 0xFF) << ")" << std::endl;
 	Util::cairo_set_source_rgbi(cr, color);
 
 	cairo_set_line_width(cr, lineWidth * lineWidthFactor);
