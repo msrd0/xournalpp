@@ -61,11 +61,14 @@ void GraphBackgroundView::draw(cairo_t* cr) const {
         maxY = std::min(maxY, squareSize * pageIndexMaxY);
     }
 
+	// nobody writes in the first graph anyways so make it slightly smaller
+	const double minYOffset = -0.25;
+	
     for (int i = indexMinX; i <= indexMaxX; ++i) {
         cairo_move_to(cr, i * squareSize, minY);
         cairo_line_to(cr, i * squareSize, maxY);
     }
-    for (int i = indexMinY; i <= indexMaxY; ++i) {
+    for (double i = indexMinY + minYOffset; i <= indexMaxY + 1; ++i) {
         cairo_move_to(cr, minX, i * squareSize);
         cairo_line_to(cr, maxX, i * squareSize);
     }
@@ -75,5 +78,14 @@ void GraphBackgroundView::draw(cairo_t* cr) const {
     cairo_set_line_width(cr, lineWidth);
     cairo_set_line_cap(cr, CAIRO_LINE_CAP_SQUARE);
     cairo_stroke(cr);
+
+	// double borders
+	cairo_move_to(cr, 5 * squareSize, minY);
+	cairo_line_to(cr, 5 * squareSize, maxY);
+	cairo_move_to(cr, pageWidth - 5 * squareSize, minY);
+	cairo_line_to(cr, pageWidth - 5 * squareSize, maxY);
+	cairo_set_line_width(cr, lineWidth * 3);
+	cairo_stroke(cr);
+	
     cairo_restore(cr);
 }
