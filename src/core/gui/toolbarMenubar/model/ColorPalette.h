@@ -72,6 +72,7 @@ struct Palette {
      *   0 255 0 Light Green
      *   51 51 204 Blue
      *   128 128 128 Gray
+     *   169 25 250 Purple
      *   255 0 0 Red
      *   255 0 255 Magenta
      *   255 128 0 Orange

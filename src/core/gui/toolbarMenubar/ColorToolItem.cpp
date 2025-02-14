@@ -43,6 +43,7 @@ void ColorToolItem::actionSelected(ActionGroup group, ActionType action) {
 }
 
 void ColorToolItem::enableColor(Color color) {
+    // std::cout << "ColorToolItem::enableColor(rgba(" << (uint64_t)color.red << ", " << (uint64_t)color.green << ", " << (uint64_t)color.blue << ", " << (uint64_t)color.alpha << "))" << std::endl;
     if (isSelector()) {
         if (this->icon) {
             this->icon->setColor(color);
